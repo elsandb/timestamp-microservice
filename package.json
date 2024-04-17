@@ -1,10 +1,10 @@
 {
-  "name": "fcc-api-projects-boilerplate",
+  "name": "fcc-api-timestamp",
   "version": "0.0.1",
   "description": "An FCC Backend Challenge",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node --watch index.js"
   },
   "dependencies": {
     "express": "^4.12.4",
@@ -18,11 +18,13 @@
     "url": "https://github.com/freeCodeCamp/freeCodeCamp/issues"
   },
   "homepage": "https://github.com/freeCodeCamp/boilerplate-project-timestamp#readme",
-  "author": "freeCodeCamp <team@freecodecamp.org>",
+  "authors": ["freeCodeCamp <team@freecodecamp.org>", "elsandb <elsandb.code@gmail.com>"],
   "keywords": [
     "node",
     "express",
-    "freeCodeCamp"
+    "freeCodeCamp",
+    "microservice",
+    "timestamp"
   ],
   "license": "MIT"
 }
