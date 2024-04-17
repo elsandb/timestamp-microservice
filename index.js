@@ -22,7 +22,6 @@ app.get("/", function (req, res) {
 /**
  * GET Current time timestamp
  * Respond with JSON obj containing a `unix` and a `utc` key.
- * API endpoint: `/api`
  */
 app.get("/api/", function (req, res) {
   res.json({ unix: Date.now(), utc: new Date(Date.now()) });
@@ -30,8 +29,12 @@ app.get("/api/", function (req, res) {
 
 
 /**
- * GET timestamps from date
- *
+ * GET timestamps from a date string or unix time value
+ * Respond with a JSON object containing a `unix` and a `utc` key.
+ * 
+ * Example:
+ * GET `/api/2015-12-25`
+ * OUTPUT: {"unix":1451001600000, "utc":"Fri, 25 Dec 2015 00:00:00 GMT"}
  */
 app.get("/api/:date", function (req, res) {
     const dateInput = req.params.date; // The URL parameter "date"
