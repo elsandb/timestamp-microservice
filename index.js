@@ -36,7 +36,7 @@ app.get("/api/", function (req, res) {
  * GET `/api/2015-12-25`
  * OUTPUT: {"unix":1451001600000, "utc":"Fri, 25 Dec 2015 00:00:00 GMT"}
  */
-app.get("/api/:date", function (req, res) {
+app.get("/api/:date?", function (req, res) {
     const dateInput = req.params.date; // The URL parameter "date"
     console.log("dateInput: " + dateInput);
 
@@ -56,7 +56,7 @@ app.get("/api/:date", function (req, res) {
         // Return an object containing the two date formats 
         res.status(200).json({
             unix: unixDate,
-            utc: `${utcDate}`,
+            utc: `${utcDate.toUTCString()}`,
         });
     }
 });
