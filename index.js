@@ -1,6 +1,3 @@
-// index.js
-// where your node app starts
-
 // init project
 var express = require("express");
 var app = express();
@@ -20,15 +17,6 @@ app.get("/", function (req, res) {
 
 
 /**
- * GET Current time timestamp
- * Respond with JSON obj containing a `unix` and a `utc` key.
- */
-app.get("/api/", function (req, res) {
-  res.json({ unix: Date.now(), utc: new Date(Date.now()) });
-});
-
-
-/**
  * GET timestamps from a date string or unix time value
  * Respond with a JSON object containing a `unix` and a `utc` key.
  * 
@@ -38,28 +26,33 @@ app.get("/api/", function (req, res) {
  */
 app.get("/api/:date?", function (req, res) {
     const dateInput = req.params.date; // The URL parameter "date"
-    console.log("dateInput: " + dateInput);
 
-    // The goal is to return an object with the date on UTC and unix format.
-    let utcDate = Number(dateInput) ? new Date(Number(dateInput)) : new Date(dateInput);
-    let unixDate = Number(dateInput) ? Number(dateInput) : Date.parse(dateInput) ;
-    console.log("UTC: " + utcDate);
-    console.log("UNIX: " + unixDate);
-
-    // Return {"error": "Invalid Date"} if the unix or utc date is invalid/null.
-    if (utcDate == "Invalid Date" || !unixDate) {
-        console.log("UTC or UNIX is invalid/null --> Invalid input");
+    // If dateInput is null or undefined
+    if (!dateInput) {
+        // Return timestamps for the current time
         return res.json({
-            "error": "Invalid Date"
-        });
-    } else {
-        // Return an object containing the two date formats 
-        res.status(200).json({
-            unix: unixDate,
-            utc: `${utcDate.toUTCString()}`,
+            unix: Date.now(),
+            utc: new Date().toUTCString()
         });
     }
+    
+    // Parse dateInput and create timestamps with UTC and UNIX format.
+    let utcDate = Number(dateInput) ? 
+        new Date(Number(dateInput)).toUTCString() : new Date(dateInput).toUTCString();
+    let unixTimeValue = Number(dateInput) ? Number(dateInput) : Date.parse(dateInput);
+
+    // If timestamps are valid, return object with timestamps.
+    if (!utcDate == "Invalid Date" || unixTimeValue) {
+        res.status(200).json({
+            unix: unixTimeValue,
+            utc: utcDate,
+        });
+    } else {
+        // If date is invalid/null, return {"error": "Invalid Date"}.
+        return res.json({ "error": "Invalid Date" });
+    }
 });
+
 
 // Listen on port set in environment variable or default to 3000
 var listener = app.listen(process.env.PORT || 3000, function () {
